@@ -10,6 +10,7 @@ image_resource:
 
 inputs:
 - name: concourse-tasks
+- name: code-base
 
 run:
   path: concourse-tasks/tasks/run-unit-tests.sh
