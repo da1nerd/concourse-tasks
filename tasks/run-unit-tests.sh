@@ -2,6 +2,8 @@
 
 set -xe
 
+npm i npm @5.8.0
+
 node --version
 npm --version
 
