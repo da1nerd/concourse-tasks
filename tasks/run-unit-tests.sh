@@ -2,7 +2,7 @@
 
 set -xe
 
-npm i npm@5.8.0
+npm i -g npm@5.8.0
 
 node --version
 npm --version
