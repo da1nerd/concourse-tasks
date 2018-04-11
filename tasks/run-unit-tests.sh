@@ -4,6 +4,6 @@ set -xe
 
 cd code-base/
 
-npm install
+npm ci
 npm run load-apps
 npm test
