@@ -2,12 +2,10 @@
 
 set -xe
 
-npm i -g npm@5.8.0
+cd code-base/
 
 node --version
-npm --version
-
-cd code-base/
+npm i npm@5.8.0
 
 npm ci
 npm run load-apps
