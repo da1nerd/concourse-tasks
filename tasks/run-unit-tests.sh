@@ -2,7 +2,7 @@
 
 set -xe
 
-cd repository
+cd code-base/
 
 npm install
 npm test
