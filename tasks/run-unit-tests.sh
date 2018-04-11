@@ -5,7 +5,7 @@ set -xe
 cd code-base/
 
 node --version
-npm i npm@5.8.0
+npm --version
 
 npm ci
 npm run load-apps
