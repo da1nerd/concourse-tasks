@@ -2,6 +2,9 @@
 
 set -xe
 
+node --version
+npm --version
+
 cd code-base/
 
 npm ci
