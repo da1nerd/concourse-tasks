@@ -9,7 +9,7 @@ image_resource:
     tag: "latest"
 
 inputs:
-- name: concourse-pipelines
+- name: concourse-tasks
 
 run:
-  path: concourse-pipelines/test-runner.sh
+  path: concourse-tasks/tasks/run-unit-tests.sh
