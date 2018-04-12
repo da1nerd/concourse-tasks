@@ -13,4 +13,4 @@ outputs:
   - name: zipped
 run:
   path: zip
-  args: [-r, release/dist.zip, code-base/dist]
+  args: [-r, zipped/dist.zip, code-base/dist]
