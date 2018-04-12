@@ -8,13 +8,13 @@ resources:
 - name: code-base
   type: git
   source:
-    uri: https://github.com/neutrinog/translationCore
-    branch: develop
+    uri: https://github.com/translationCoreApps/word-map
+    branch: master
 - name: concourse-tasks
   type: git
   source:
     uri: https://github.com/neutrinog/concourse-tasks
-    branch: master
+    branch: map
 
 jobs:
 - name: unit-tests
