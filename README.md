@@ -15,3 +15,8 @@ Then deploy the pipeline
 ```
 fly -t ci set-pipeline -p translationCore -c tc-pipeline.yml
 ```
+
+To debug a job
+```
+fly -t ci intercept -j translationCore/unit-tests
+```
