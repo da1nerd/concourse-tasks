@@ -14,6 +14,3 @@ inputs:
 
 run:
   path: concourse-tasks/tasks/run-build.sh
-
-params:
-  BUILD_PLATFORM
