@@ -20,6 +20,7 @@ jobs:
 - name: hello
   plan:
   - get: concourse-tasks
+    trigger: true
   - task: say-hello
     file: concourse-tasks/tasks/hello-world.yml
 - name: unit-tests
