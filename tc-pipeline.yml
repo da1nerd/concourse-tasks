@@ -23,3 +23,9 @@ jobs:
     trigger: true
   - task: run-unit-tests
     file: concourse-tasks/tasks/unit-tests.yml
+- name: builds
+  plan:
+  - get: code-base
+  - get: concourse-tasks
+  - task: build-linux
+    file: concourse-tasks/tasks/build.yml

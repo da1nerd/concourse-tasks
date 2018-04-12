@@ -1,0 +1,19 @@
+
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: neutrinog/node-docker
+    tag: "latest"
+
+inputs:
+- name: concourse-tasks
+- name: code-base
+
+run:
+  path: concourse-tasks/tasks/run-build.sh
+
+params:
+  BUILD_PLATFORM
