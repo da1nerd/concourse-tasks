@@ -1,7 +1,6 @@
 groups:
 - name: main
   jobs:
-  - hello
   - unit-tests
 
 resources:
@@ -17,12 +16,6 @@ resources:
     branch: master
 
 jobs:
-- name: hello
-  plan:
-  - get: concourse-tasks
-    trigger: true
-  - task: say-hello
-    file: concourse-tasks/tasks/hello-world.yml
 - name: unit-tests
   plan:
   - get: concourse-tasks
