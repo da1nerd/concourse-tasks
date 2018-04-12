@@ -15,3 +15,15 @@ However, here's a quick run down:
 1. deploy the pipeline.
 
 Once the pipeline is up and running you just need to log in to the web UI and trigger the task.
+
+## Debugging jobs
+It can be helpful to hijack a job for debugging.
+
+```
+fly -t [session] intercept -j [pipeline]/[job]
+```
+e.g.
+
+```
+fly -t ci intercept -j translationCore/unit-tests
+```
