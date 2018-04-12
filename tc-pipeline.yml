@@ -3,6 +3,7 @@ groups:
   jobs:
   - unit-tests
   - builds
+  - deploy
 
 resources:
 - name: code-base
@@ -39,3 +40,18 @@ jobs:
       - unit-tests
   - task: build-linux
     file: concourse-tasks/tasks/build.yml
+- name: deploy
+  public: true
+  plan:
+  - get: code-base
+    trigger: true
+    passed:
+      - builds
+  - get: concourse-tasks
+    trigger: true
+    passed:
+      - builds
+  - task: zip-it
+    file: concourse-tasks/tasks/zip.yml
+#  - task: surge-it
+#    file: concourse-tasks/tasks/surge.yml

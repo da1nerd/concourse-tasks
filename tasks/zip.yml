@@ -1,0 +1,13 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source: {repository: busybox}
+
+inputs:
+  - name: code-base
+
+run:
+  path: ls
+  args: codebase/dist

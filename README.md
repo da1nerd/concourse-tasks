@@ -33,5 +33,5 @@ fly -t ci intercept -j translationCore/unit-tests
 
 To execute a single job without running the entire pipeline
 ```
-// TODO
+fly -t ci execute --config some-task.yml
 ```
