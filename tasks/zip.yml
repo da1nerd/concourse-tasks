@@ -7,7 +7,8 @@ image_resource:
 
 inputs:
   - name: code-base
-
+outputs:
+  - name: zipped
 run:
-  path: ls
-  args: [codebase/dist]
+  path: zip
+  args: [release/dist.zip, code-base/dist]
