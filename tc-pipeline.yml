@@ -18,16 +18,20 @@ resources:
 
 jobs:
 - name: unit-tests
+  public: true
   plan:
   - get: concourse-tasks
   - get: code-base
     trigger: true
-    passed: [builds]
   - task: run-unit-tests
     file: concourse-tasks/tasks/unit-tests.yml
 - name: builds
+  public: true
   plan:
   - get: code-base
+    trigger: true
+    passed:
+      - unit-tests
   - get: concourse-tasks
   - task: build-linux
     file: concourse-tasks/tasks/build.yml
