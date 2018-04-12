@@ -1,0 +1,25 @@
+groups:
+- name: main
+  jobs:
+  - unit-tests
+
+resources:
+- name: code-base
+  type: git
+  source:
+    uri: https://github.com/neutrinog/translationCore
+    branch: develop
+- name: concourse-tasks
+  type: git
+  source:
+    uri: https://github.com/neutrinog/concourse-tasks
+    branch: master
+
+jobs:
+- name: unit-tests
+  plan:
+  - get: concourse-tasks
+  - get: code-base
+    trigger: true
+  - task: run-unit-tests
+    file: concourse-tasks/tasks/unit-tests.yml
