@@ -16,4 +16,4 @@ outputs:
 - name: build
 
 run:
-  path: concourse-tasks/tasks/run-build.sh
+  path: concourse-tasks/scripts/run-build.sh

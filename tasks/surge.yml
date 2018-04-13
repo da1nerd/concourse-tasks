@@ -13,4 +13,4 @@ inputs:
 - name: release
 
 run:
-  path: concourse-tasks/tasks/run-surge.sh
+  path: concourse-tasks/scripts/run-surge.sh
