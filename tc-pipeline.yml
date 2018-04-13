@@ -102,7 +102,7 @@ jobs:
   - task: zip-it
     file: concourse-tasks/tasks/zip.yml
   - task: release-it
-    file: concourse-tasks/tasks/surge.yml
+    file: concourse-tasks/tasks/dropbox.yml
 # - name: deploy
 #   public: true
 #   plan:
