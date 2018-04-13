@@ -7,8 +7,7 @@ cd code-base/
 node --version
 npm --version
 
-npm install
-npm run build
+npm install surge -g
 
-# copy into output
-cp -a dist/. ../build/
+# TODO: surge it!
+echo "running surge...";

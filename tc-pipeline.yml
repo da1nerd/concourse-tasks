@@ -42,6 +42,8 @@ jobs:
     file: concourse-tasks/tasks/build.yml
   - task: zip-it
     file: concourse-tasks/tasks/zip.yml
+  - task: release-it
+    file: concourse-tasks/tasks/surge.yml
 # - name: deploy
 #   public: true
 #   plan:
