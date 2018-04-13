@@ -13,4 +13,5 @@ inputs:
 - name: release
 
 run:
-  path: concourse-tasks/scripts/run-surge.sh
+  path: concourse-tasks/scripts/dropbox_uploader.sh
+  args: [-t, ((dropbox-token)), release, tc-builds]
