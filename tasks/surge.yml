@@ -9,6 +9,7 @@ image_resource:
     tag: "8.10"
 
 inputs:
+- name: concourse-tasks
 - name: release
 
 run:
