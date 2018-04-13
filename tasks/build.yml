@@ -13,7 +13,7 @@ inputs:
 - name: code-base
 
 outputs:
-- name: release
+- name: code-base/dist
 
 run:
   path: concourse-tasks/tasks/run-build.sh
