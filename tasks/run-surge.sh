@@ -2,8 +2,6 @@
 
 set -xe
 
-cd code-base/
-
 node --version
 npm --version
 
