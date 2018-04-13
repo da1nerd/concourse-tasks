@@ -2,7 +2,7 @@ groups:
 - name: main
   jobs:
   - test-master
-  - test-pr
+  - PR tests
   - build
   # - deploy
 
@@ -23,23 +23,42 @@ resources:
   source:
     uri: https://github.com/neutrinog/concourse-tasks
     branch: map
-- name: git-pull-request
+# - name: git-pr
+#   type: pull-request
+#   source:
+#     repo: translationCoreApps/word-map
+#     access_token: ((github-token))
+#
+- name: git-pull-requests
   type: pull-request
   source:
-    repo: translationCoreApps/word-map
     access_token: ((github-token))
+    private_key: ((github-private-key))
+    repo: translationCoreApps/word-map
+    base: master
 
 jobs:
-- name: test-pr
+- name: PR tests
   public: true
   plan:
-  - get: git-pull-request
+  - get: git-pull-requests
     trigger: true
+    version: every
   - get: concourse-tasks
   - task: test-pull-request
     input_mapping:
-      code-base: git-pull-request
+      code-base: git-pull-requests
     file: concourse-tasks/tasks/unit-tests.yml
+    on_success:
+      put: git-pull-requests
+      params:
+        path: git-pull-requests
+        status: success
+    on_failure:
+      put: git-pull-requests
+      params:
+        path: git-pull-requests
+        status: failure
 - name: test-master
   public: true
   plan:
@@ -55,10 +74,10 @@ jobs:
     trigger: true
     passed:
       - test-master
-  - get: git-pull-request
+  - get: git-pull-requests
     trigger: true
     passed:
-      - test-pr
+      - PR tests
   - get: concourse-tasks
   - task: build-linux
     file: concourse-tasks/tasks/build.yml
