@@ -8,9 +8,9 @@ image_resource:
     tag: "8.10"
 
 inputs:
-  - name: code-base
+  - name: release
 outputs:
   - name: zipped
 run:
   path: zip
-  args: [-r, zipped/dist.zip, code-base/dist]
+  args: [-r, zipped/dist.zip, release]

@@ -9,3 +9,6 @@ npm --version
 
 npm install
 npm run build
+
+# copy into output
+cp -a dist/. ../release/
