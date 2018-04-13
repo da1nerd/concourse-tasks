@@ -7,5 +7,7 @@ npm --version
 
 npm install surge -g
 
+cd release
+
 # TODO: surge it!
 echo "running surge...";

@@ -1,9 +1,16 @@
 groups:
 - name: main
   jobs:
-  - test
+  - test-master
+  - test-pr
   - build
   # - deploy
+
+resource_types:
+- name: pull-request
+  type: docker-image
+  source:
+    repository: jtarchie/pr
 
 resources:
 - name: code-base
@@ -16,13 +23,27 @@ resources:
   source:
     uri: https://github.com/neutrinog/concourse-tasks
     branch: map
+- name: git-pull-request
+  type: pull-request
+  source:
+    repo: translationCoreApps/word-map
+    access_token: ((github-token))
 
 jobs:
-- name: test
+- name: test-pr
+  public: true
+  plan:
+  - get: git-pull-request
+    trigger: true
+  - get: concourse-tasks
+  - task: test-pull-request
+    input_mapping:
+      code-base: git-pull-request
+    file: concourse-tasks/tasks/unit-tests.yml
+- name: test-master
   public: true
   plan:
   - get: concourse-tasks
-    trigger: true
   - get: code-base
     trigger: true
   - task: run-unit-tests
@@ -33,11 +54,8 @@ jobs:
   - get: code-base
     trigger: true
     passed:
-      - test
+      - test-master
   - get: concourse-tasks
-    trigger: true
-    passed:
-      - test
   - task: build-linux
     file: concourse-tasks/tasks/build.yml
   - task: zip-it

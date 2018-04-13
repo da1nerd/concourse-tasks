@@ -23,15 +23,15 @@ fly -t ci login -c http://127.0.0.1:8080
 
 Then deploy the pipeline
 ```
-fly -t ci set-pipeline -p translationCore -c tc-pipeline.yml
+fly -t ci set-pipeline -p map -c tc-pipeline.yml -l credentials.yml
 ```
 
 To debug a job
 ```
-fly -t ci intercept -j translationCore/unit-tests
+fly -t ci intercept -j map/build
 ```
 
 To execute a single job without running the entire pipeline
 ```
-fly -t ci execute --config some-task.yml
+fly -t ci execute --config tasks/unit-tests.yml
 ```
