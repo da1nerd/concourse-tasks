@@ -14,4 +14,4 @@ inputs:
 
 run:
   path: concourse-tasks/scripts/dropbox_uploader.sh
-  args: [-t, ((dropbox-token)), upload release, tc-builds]
+  args: [-t, ((dropbox-token)), upload, release, tc-builds/dist.zip]
