@@ -12,5 +12,8 @@ inputs:
 - name: concourse-tasks
 - name: code-base
 
+outputs:
+- name: test-log
+
 run:
   path: concourse-tasks/tasks/run-unit-tests.sh

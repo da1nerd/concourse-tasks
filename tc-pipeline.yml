@@ -53,6 +53,7 @@ jobs:
       put: git-pull-requests
       params:
         path: git-pull-requests
+        comment: test-log/comment.txt
         status: success
     on_failure:
       put: git-pull-requests
