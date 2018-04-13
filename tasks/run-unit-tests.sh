@@ -7,5 +7,5 @@ cd code-base/
 node --version
 npm --version
 
-npm ci
+npm install
 npm test
