@@ -1,8 +1,8 @@
 groups:
 - name: main
   jobs:
-  - unit-tests
-  - builds
+  - test
+  - build
   # - deploy
 
 resources:
@@ -18,7 +18,7 @@ resources:
     branch: map
 
 jobs:
-- name: unit-tests
+- name: test
   public: true
   plan:
   - get: concourse-tasks
@@ -27,17 +27,17 @@ jobs:
     trigger: true
   - task: run-unit-tests
     file: concourse-tasks/tasks/unit-tests.yml
-- name: builds
+- name: build
   public: true
   plan:
   - get: code-base
     trigger: true
     passed:
-      - unit-tests
+      - test
   - get: concourse-tasks
     trigger: true
     passed:
-      - unit-tests
+      - test
   - task: build-linux
     file: concourse-tasks/tasks/build.yml
   - task: zip-it
