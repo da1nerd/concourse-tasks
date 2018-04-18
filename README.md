@@ -8,9 +8,9 @@ To get started follow the direction at https://concourse-ci.org/ and deploy the 
 
 However, here's a quick run down:
 
-1. install docker
-1. install docker-compose
-1. install concourse
+1. install [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/#set-up-the-repository)
+1. install [docker-compose](https://docs.docker.com/compose/install/)
+1. install [concourse](https://concourse-ci.org/)
 1. install fly (download link in your running concourse instance)
 1. deploy the pipeline.
 
