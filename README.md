@@ -15,6 +15,9 @@ These are some sample tasks and a pipeline for translationCore.
 
 ## Deployment
 
+> These deployment instructions assume you are running concourse on your local machine.
+> If you are running it on a server simply change the target url to the appropriate address and port.
+
 First log into your concourse instance
 ```
 fly -t ci login -c http://127.0.0.1:8080
