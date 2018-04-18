@@ -103,6 +103,8 @@ jobs:
     file: concourse-tasks/tasks/zip.yml
   - task: release-it
     file: concourse-tasks/tasks/dropbox.yml
+    params:
+      TOKEN: ((dropbox-token))
 # - name: deploy
 #   public: true
 #   plan:
