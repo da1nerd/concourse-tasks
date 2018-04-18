@@ -2,17 +2,16 @@
 
 These are some sample tasks and a pipeline for translationCore.
 
-## Usage
-
-To get started follow the direction at https://concourse-ci.org/ and deploy the pipeline included in this repository.
-
-However, here's a quick run down:
+## Prerequisits
 
 1. install [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/#set-up-the-repository)
 1. install [docker-compose](https://docs.docker.com/compose/install/)
-1. install [concourse](https://concourse-ci.org/)
-1. install [fly](https://github.com/concourse/concourse/releases)
-1. deploy the pipeline.
+1. install concourse on either:
+   1. [a server](https://github.com/concourse/concourse-docker)
+   1. [your local machine](https://concourse-ci.org/) (see quick start guide)
+1. install [fly](https://github.com/concourse/concourse/releases) on your local machine so you can interact with concourse.
+1. deploy the pipeline with fly!
+
 
 ## Deployment
 
