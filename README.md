@@ -53,8 +53,10 @@ fly -t ci login -c http://127.0.0.1:8080
 
 Then deploy the pipeline
 ```
-fly -t ci set-pipeline -p translationCore -c tc-pipeline.yml
+fly -t ci set-pipeline -p translationCore -c tc-pipeline.yml -l credentials.yml
 ```
+
+> NOTE: you'll need to provide the correct credentials inside `credentials.yml` see [Parameters](https://concoursetutorial.com/basics/parameters/) for details.
 
 To debug a job
 ```
