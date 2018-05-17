@@ -1,9 +1,10 @@
 groups:
 - name: main
   jobs:
-  - Test Develop
-  - Test PR
-  - Build Develop
+  - test-master
+  - PR tests
+  - build
+  # - deploy
 
 resource_types:
 - name: pull-request
@@ -12,30 +13,35 @@ resource_types:
     repository: jtarchie/pr
 
 resources:
-- name: develop-branch
+- name: code-base
   type: git
   source:
-    uri: https://github.com/unfoldingWord-dev/translationCore
-    branch: develop
+    uri: https://github.com/translationCoreApps/word-map
+    branch: master
 - name: concourse-tasks
   type: git
   source:
     uri: https://github.com/neutrinog/concourse-tasks
-    branch: master
-- name: develop-pull-requests
+    branch: map
+# - name: git-pr
+#   type: pull-request
+#   source:
+#     repo: translationCoreApps/word-map
+#     access_token: ((github-token))
+#
+- name: git-pull-requests
   type: pull-request
   source:
     access_token: ((github-token))
     private_key: ((github-private-key))
-    repo: unfoldingWord-dev/translationCore
-    base: develop
+    repo: translationCoreApps/word-map
+    base: master
 
 jobs:
-# test pull requests
-- name: Test PR
+- name: PR tests
   public: true
   plan:
-  - get: develop-pull-requests
+  - get: git-pull-requests
     trigger: true
     version: every
   - get: concourse-tasks
@@ -50,48 +56,67 @@ jobs:
         path: echo
         args: [setting pending status]
     on_success:
-      put: develop-pull-requests
+      put: git-pull-requests
       params:
-        path: develop-pull-requests
+        path: git-pull-requests
         context: unit-tests
         status: pending
   - task: test-pull-request
     input_mapping:
-      develop-branch: develop-pull-requests
+      code-base: git-pull-requests
     file: concourse-tasks/tasks/unit-tests.yml
     on_success:
-      put: develop-pull-requests
+      put: git-pull-requests
       params:
-        path: develop-pull-requests
+        path: git-pull-requests
         context: unit-tests
         comment: test-log/comment.md
         status: success
     on_failure:
-      put: develop-pull-requests
+      put: git-pull-requests
       params:
-        path: develop-pull-requests
+        path: git-pull-requests
         status: failure
-
-# test develop branch
-- name: Test Develop
+- name: test-master
   public: true
   plan:
   - get: concourse-tasks
   - get: code-base
-    recource: develop-branch
     trigger: true
   - task: run-unit-tests
     file: concourse-tasks/tasks/unit-tests.yml
-
-# build develop branch
-- name: Build Develop
+- name: build
   public: true
   plan:
   - get: code-base
-    resource: develop-branch
     trigger: true
     passed:
-      - Test Develop
+      - test-master
+  - get: git-pull-requests
+    trigger: true
+    passed:
+      - PR tests
   - get: concourse-tasks
   - task: build-linux
-    file: concourse-tasks/tasks/build-linux.yml
+    file: concourse-tasks/tasks/build.yml
+  - task: zip-it
+    file: concourse-tasks/tasks/zip.yml
+  - task: release-it
+    file: concourse-tasks/tasks/dropbox.yml
+    params:
+      TOKEN: ((dropbox-token))
+# - name: deploy
+#   public: true
+#   plan:
+#   - get: code-base
+#     trigger: true
+#     passed:
+#       - builds
+#   - get: concourse-tasks
+#     trigger: true
+#     passed:
+#       - builds
+#   - task: zip-it
+#     file: concourse-tasks/tasks/zip.yml
+#  - task: surge-it
+#    file: concourse-tasks/tasks/surge.yml
