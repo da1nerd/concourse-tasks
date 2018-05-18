@@ -78,10 +78,11 @@ jobs:
   public: true
   plan:
   - get: concourse-tasks
-  - get: code-base
-    resource: develop-branch
+  - get: develop-branch
     trigger: true
   - task: run-unit-tests
+    input_mapping:
+      code-base: develop-branch
     file: concourse-tasks/tasks/unit-tests.yml
 
 # build develop branch
