@@ -8,6 +8,7 @@ node --version
 npm --version
 
 npm install
+npm install -g gulp
 npm run load-apps
 gulp build --linux || exit 1;
 gulp release --linux || exit 1;
