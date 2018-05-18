@@ -57,7 +57,7 @@ jobs:
         status: pending
   - task: test-pull-request
     input_mapping:
-      develop-branch: develop-pull-requests
+      code-base: develop-pull-requests
     file: concourse-tasks/tasks/unit-tests.yml
     on_success:
       put: develop-pull-requests
@@ -70,6 +70,7 @@ jobs:
       put: develop-pull-requests
       params:
         path: develop-pull-requests
+        context: unit-tests
         status: failure
 
 # test develop branch
@@ -78,7 +79,7 @@ jobs:
   plan:
   - get: concourse-tasks
   - get: code-base
-    recource: develop-branch
+    resource: develop-branch
     trigger: true
   - task: run-unit-tests
     file: concourse-tasks/tasks/unit-tests.yml

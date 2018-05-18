@@ -53,7 +53,7 @@ fly -t ci login -c http://127.0.0.1:8080
 
 Then deploy the pipeline
 ```
-fly -t ci set-pipeline -p map -c tc-pipeline.yml -l credentials.yml
+fly -t ci set-pipeline -p translationCore -c tc-pipeline.yml -l credentials.yml
 ```
 
 To debug a job
