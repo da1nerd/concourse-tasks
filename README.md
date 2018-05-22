@@ -48,8 +48,10 @@ You could also add ssl support in the above configuration if desired.
 
 First log into your concourse instance
 ```
-fly -t ci login -c http://127.0.0.1:8080
+fly -t ci login -n tc -c http://127.0.0.1:8080
 ```
+> TRICKY: if you are logging in to any team other than `main` you'll need to specify the team name
+> with `-n` as shown above.
 
 Then deploy the pipeline
 ```
