@@ -29,6 +29,14 @@ resources:
     private_key: ((github-private-key))
     repo: unfoldingWord-dev/translationCore
     base: develop
+- name: builds
+  type: s3
+  source:
+    bucket: tc-builds.door43.org
+    regexp: translationCore-(os)-(bits)-(.*).(ext)
+    access_key_id: ((aws-access-id))
+    secret_access_key: ((aws-secret-key))
+    region_name: us-west-1
 
 jobs:
 # test pull requests
@@ -95,5 +103,11 @@ jobs:
     passed:
       - Test Develop
   - get: concourse-tasks
+  - get: builds
   - task: build-linux
     file: concourse-tasks/tasks/build-linux.yml
+    on_success:
+      put: builds
+      params:
+        file: build/*
+        acl: public-read
