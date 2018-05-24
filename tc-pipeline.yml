@@ -1,10 +1,12 @@
 groups:
-- name: main
+- name: develop
   jobs:
   - Test Develop
+  - Build Develop
+- name: pull requests
+  jobs:
   - Test PR
   - Build PR
-  - Build Develop
 
 resource_types:
 - name: pull-request

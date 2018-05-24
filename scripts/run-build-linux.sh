@@ -8,9 +8,9 @@ node --version
 npm --version
 
 HASH=$(git rev-parse HEAD | cut -c1-7)
-echo $HASH > ../commit.txt
+# echo $HASH > ../commit.txt
 VERSION=$(node -p -e "require('./package.json').version")
-echo $VERSION > ../version.txt
+# echo $VERSION > ../version.txt
 
 npm install
 npm install -g gulp@4.0.0
