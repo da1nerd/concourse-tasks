@@ -33,7 +33,7 @@ resources:
   type: s3
   source:
     bucket: tc-builds.door43.org
-    regexp: translationCore-(os)-(bits)-(.*).(ext)
+    regexp: translationCore-(.*)-(.*)-(?<version>.*)\.(.*)
     access_key_id: ((aws-access-id))
     secret_access_key: ((aws-secret-key))
     region_name: us-west-2
@@ -108,5 +108,5 @@ jobs:
     on_success:
       put: builds
       params:
-        file: build/*
+        file: build/linux-x64/*
         acl: public-read
