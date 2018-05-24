@@ -3,6 +3,7 @@ groups:
   jobs:
   - Test Develop
   - Test PR
+  - Build PR
   - Build Develop
 
 resource_types:
@@ -102,6 +103,25 @@ jobs:
     trigger: true
     passed:
       - Test Develop
+  - get: concourse-tasks
+  - task: build-linux
+    file: concourse-tasks/tasks/build-linux.yml
+    on_success:
+      put: builds
+      params:
+        file: build/linux/*
+        acl: public-read
+
+# build pull request
+- name: Build PR
+  public: true
+  plan:
+  - get: code-base
+    resource: develop-pull-requests
+    trigger: true
+    version: every
+    passed:
+      - Test PR
   - get: concourse-tasks
   - task: build-linux
     file: concourse-tasks/tasks/build-linux.yml
