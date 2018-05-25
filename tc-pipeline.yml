@@ -143,7 +143,7 @@ jobs:
         params:
           path: develop-pull-requests
           context: build
-          comment: build_meta/filename.md
+          comment: build_meta/comment.md
           status: success
     on_failure:
       put: develop-pull-requests
