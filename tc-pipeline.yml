@@ -124,7 +124,9 @@ jobs:
           acl: public-read
       - put: notify
         params:
-          text: "Concourse build succeeded"
+          text_file: build_meta/comment.md
+          username: door43-ci
+          icon_url: https://cdn.door43.org/assets/img/icons/icon-d43-lg.png
 
 # build pull request
 - name: Build PR
