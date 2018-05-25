@@ -13,7 +13,7 @@ VERSION=$(node -p -e "require('./package.json').version")
 echo $VERSION > ../build_meta/version.txt
 FILE=translationCore-linux-x64-$VERSION-$HASH.zip
 echo $FILE > ../build_meta/filename.txt
-echo "Build [$VERSION ($HASH)](https://s3-us-west-2.amazonaws.com/tc-builds.door43.org/$FILE) is ready for download." > ../build_meta/comment.md
+echo "[Linux build $HASH (v$VERSION)](https://s3-us-west-2.amazonaws.com/tc-builds.door43.org/$FILE) is ready for download." > ../build_meta/comment.md
 
 npm install
 npm install -g gulp@4.0.0

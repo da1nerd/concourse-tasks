@@ -13,8 +13,17 @@ resource_types:
   type: docker-image
   source:
     repository: jtarchie/pr
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+    tag: latest
 
 resources:
+- name: notify
+  type: slack-notification
+  source:
+    url: ((slack-webhook))
 - name: develop-branch
   type: git
   source:
@@ -108,10 +117,14 @@ jobs:
   - task: build-linux
     file: concourse-tasks/tasks/build-linux.yml
     on_success:
-      put: builds
-      params:
-        file: build/linux/*
-        acl: public-read
+      do:
+      - put: builds
+        params:
+          file: build/linux/*
+          acl: public-read
+      - put: notify
+        params:
+          text: "Concourse build succeeded"
 
 # build pull request
 - name: Build PR
