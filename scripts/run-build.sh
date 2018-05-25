@@ -16,4 +16,4 @@ npm install
 npm install -g gulp@4.0.0
 npm run load-apps
 
-../concourse-tasks/scripts/run-build-$PLATFORM.sh
+HASH=$HASH VERSION=$VERSION ../concourse-tasks/scripts/run-build-$PLATFORM.sh
