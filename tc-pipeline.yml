@@ -75,7 +75,6 @@ jobs:
       params:
         path: develop-pull-requests
         context: unit-tests
-        comment: test-log/comment.md
         status: success
     on_failure:
       put: develop-pull-requests
