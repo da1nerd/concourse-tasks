@@ -128,7 +128,7 @@ jobs:
   - do:
     - put: develop-pull-requests
       params:
-        path: develop-pull-requests
+        path: code-base
         context: build
         status: pending
   - task: build-linux
