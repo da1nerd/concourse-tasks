@@ -7,8 +7,13 @@ cd code-base/
 node --version
 npm --version
 
-npm install
-npm run build
+HASH=$(git rev-parse HEAD | cut -c1-7)
+# echo $HASH > ../build_meta/commit.txt
+VERSION=$(node -p -e "require('./package.json').version")
+# echo $VERSION > ../build_meta/version.txt
 
-# copy into output
-cp -a dist/. ../build/
+npm install
+npm install -g gulp@4.0.0
+npm run load-apps
+
+../concourse-tasks/scripts/run-build-$PLATFORM.sh

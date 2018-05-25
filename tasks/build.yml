@@ -20,4 +20,4 @@ params:
   PLATFORM: linux
 
 run:
-  path: concourse-tasks/scripts/run-build-((PLATFORM)).sh
+  path: concourse-tasks/scripts/run-build.sh
