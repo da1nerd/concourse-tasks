@@ -14,8 +14,7 @@ inputs:
 
 outputs:
 - name: build
-- name: version
-- name: commit
+- name: build_meta
 
 run:
   path: concourse-tasks/scripts/run-build-linux.sh

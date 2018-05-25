@@ -48,24 +48,24 @@ You could also add ssl support in the above configuration if desired.
 
 First log into your concourse instance
 ```
-fly -t ci login -n tc -c http://127.0.0.1:8080
+fly -t ci.door43 login -n tc -c https://ci.door43.org
 ```
 > TRICKY: if you are logging in to any team other than `main` you'll need to specify the team name
 > with `-n` as shown above.
 
 Then deploy the pipeline
 ```
-fly -t ci set-pipeline -p translationCore -c tc-pipeline.yml -l credentials.yml
+fly -t ci.door43 set-pipeline -p translationCore -c tc-pipeline.yml -l credentials.yml
 ```
 
 > NOTE: you'll need to provide the correct credentials inside `credentials.yml` see [Parameters](https://concoursetutorial.com/basics/parameters/) for details.
 
 To debug a job
 ```
-fly -t ci intercept -j map/build
+fly -t ci.door43 intercept -j map/build
 ```
 
 To execute a single job without running the entire pipeline
 ```
-fly -t ci execute --config tasks/unit-tests.yml
+fly -t ci.door43 execute --config tasks/unit-tests.yml
 ```

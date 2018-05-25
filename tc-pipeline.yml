@@ -125,10 +125,29 @@ jobs:
     passed:
       - Test PR
   - get: concourse-tasks
+  - do:
+    - put: develop-pull-requests
+      params:
+        path: develop-pull-requests
+        context: build
+        status: pending
   - task: build-linux
     file: concourse-tasks/tasks/build-linux.yml
     on_success:
-      put: builds
+      do:
+      - put: builds
+        params:
+          file: build/linux/*
+          acl: public-read
+      - put: develop-pull-requests
+        params:
+          path: develop-pull-requests
+          context: build
+          comment: build_meta/filename.md
+          status: success
+    on_failure:
+      put: develop-pull-requests
       params:
-        file: build/linux/*
-        acl: public-read
+        path: develop-pull-requests
+        context: build
+        status: failure
