@@ -14,6 +14,10 @@ inputs:
 
 outputs:
 - name: build
+- name: build_meta
+
+params:
+  PLATFORM: linux
 
 run:
-  path: concourse-tasks/scripts/run-build.sh
+  path: concourse-tasks/scripts/run-build-((PLATFORM)).sh

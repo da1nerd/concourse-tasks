@@ -51,6 +51,42 @@ resources:
     region_name: us-west-2
 
 jobs:
+# test develop branch
+- name: Test Develop
+  public: true
+  plan:
+  - get: concourse-tasks
+  - get: develop-branch
+    trigger: true
+  - task: run-unit-tests
+    input_mapping:
+      code-base: develop-branch
+    file: concourse-tasks/tasks/unit-tests.yml
+
+# build develop branch
+- name: Build Develop
+  public: true
+  plan:
+  - get: code-base
+    resource: develop-branch
+    trigger: true
+    passed:
+      - Test Develop
+  - get: concourse-tasks
+  - task: build-linux
+    file: concourse-tasks/tasks/build.yml
+    params:
+      PLATFORM: linux
+    on_success:
+      do:
+      - put: builds
+        params:
+          file: build/linux/*
+          acl: public-read
+      - put: notify
+        params:
+          text_file: build_meta/notification.txt
+
 # test pull requests
 - name: Test PR
   public: true
@@ -92,40 +128,6 @@ jobs:
         context: unit-tests
         status: failure
 
-# test develop branch
-- name: Test Develop
-  public: true
-  plan:
-  - get: concourse-tasks
-  - get: develop-branch
-    trigger: true
-  - task: run-unit-tests
-    input_mapping:
-      code-base: develop-branch
-    file: concourse-tasks/tasks/unit-tests.yml
-
-# build develop branch
-- name: Build Develop
-  public: true
-  plan:
-  - get: code-base
-    resource: develop-branch
-    trigger: true
-    passed:
-      - Test Develop
-  - get: concourse-tasks
-  - task: build-linux
-    file: concourse-tasks/tasks/build-linux.yml
-    on_success:
-      do:
-      - put: builds
-        params:
-          file: build/linux/*
-          acl: public-read
-      - put: notify
-        params:
-          text_file: build_meta/notification.txt
-
 # build pull request
 - name: Build PR
   public: true
@@ -144,22 +146,49 @@ jobs:
         context: build
         status: pending
   - task: build-linux
-    file: concourse-tasks/tasks/build-linux.yml
+    file: concourse-tasks/tasks/build.yml
+    params:
+      PLATFORM: linux
     on_success:
       do:
       - put: builds
         params:
           file: build/linux/*
           acl: public-read
-      - put: develop-pull-requests
-        params:
-          path: develop-pull-requests
-          context: build
-          comment: build_meta/comment.md
-          status: success
-    on_failure:
-      put: develop-pull-requests
-      params:
-        path: develop-pull-requests
-        context: build
-        status: failure
+  # - task: build-windows
+  #   file: concourse-tasks/tasks/build.yml
+  #   params:
+  #     PLATFORM: windows
+  #   on_success:
+  #     do:
+  #     - put: builds
+  #       params:
+  #         file: build/windows/64/*
+  #         acl: public-read
+  #     - put: builds
+  #       params:
+  #         file: build/windows/32/*
+  #         acl: public-read
+  # - task: build-macos
+  #   file: concourse-tasks/tasks/build.yml
+  #   params:
+  #     PLATFORM: macos
+  #   on_success:
+  #     do:
+  #     - put: builds
+  #       params:
+  #         file: build/macos/*
+  #         acl: public-read
+  - on_failure:
+    put: develop-pull-requests
+    params:
+      path: develop-pull-requests
+      context: build
+      status: failure
+  - on_success:
+    put: develop-pull-requests
+    params:
+      path: develop-pull-requests
+      context: build
+      comment: build_meta/comment.md
+      status: success
