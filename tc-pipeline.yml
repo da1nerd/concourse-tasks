@@ -164,6 +164,18 @@ jobs:
           params:
             file: build/linux/*
             acl: public-read
+    - task: build-macos
+      file: concourse-tasks/tasks/build.yml
+      input_mapping:
+        code-base: code-with-dependencies
+      params:
+        PLATFORM: macos
+      on_success:
+        do:
+        - put: upload
+          params:
+            file: build/macos/*
+            acl: public-read
     - task: build-windows
       file: concourse-tasks/tasks/build.yml
       input_mapping:
@@ -179,18 +191,6 @@ jobs:
         - put: upload
           params:
             file: build/windows/32/*
-            acl: public-read
-    - task: build-macos
-      file: concourse-tasks/tasks/build.yml
-      input_mapping:
-        code-base: code-with-dependencies
-      params:
-        PLATFORM: macos
-      on_success:
-        do:
-        - put: upload
-          params:
-            file: build/macos/*
             acl: public-read
     on_failure:
       do:
