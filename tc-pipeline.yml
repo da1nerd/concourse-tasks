@@ -73,6 +73,10 @@ jobs:
     passed:
       - Test Develop
   - get: concourse-tasks
+  - task: comment
+    file: concourse-tasks/tasks/add-build-comment.yml
+    params:
+      comment: "From the `develop` branch:"
   - task: build-linux
     file: concourse-tasks/tasks/build.yml
     params:
