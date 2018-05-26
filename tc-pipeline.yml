@@ -150,8 +150,12 @@ jobs:
         context: build
         status: pending
   - do:
+    - task: install-dependencies
+      file: concourse-tasks/tasks/install-deps.yml
     - task: build-linux
       file: concourse-tasks/tasks/build.yml
+      input_mapping:
+        code-base: code-with-dependencies
       params:
         PLATFORM: linux
       on_success:
@@ -162,6 +166,8 @@ jobs:
             acl: public-read
     - task: build-windows
       file: concourse-tasks/tasks/build.yml
+      input_mapping:
+        code-base: code-with-dependencies
       params:
         PLATFORM: windows
       on_success:
@@ -176,6 +182,8 @@ jobs:
             acl: public-read
     - task: build-macos
       file: concourse-tasks/tasks/build.yml
+      input_mapping:
+        code-base: code-with-dependencies
       params:
         PLATFORM: macos
       on_success:
