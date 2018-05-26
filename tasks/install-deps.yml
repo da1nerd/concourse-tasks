@@ -9,15 +9,10 @@ image_resource:
 
 inputs:
 - name: concourse-tasks
-- name: build_meta
-  path: input_meta
-  optional: true
+- name: code-base
 
 outputs:
-- name: build_meta
-
-params:
-  text:
+- name: code-with-dependencies
 
 run:
-  path: concourse-tasks/scripts/run-add-build-comment.sh
+  path: concourse-tasks/scripts/run-install-deps.sh
