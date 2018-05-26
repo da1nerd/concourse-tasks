@@ -143,11 +143,20 @@ jobs:
     passed:
       - Test PR
   - get: concourse-tasks
+  - task: comment
+    file: concourse-tasks/tasks/add-build-comment.yml
+    params:
+      text: "Testing PR comments"
+  - task: comment
+    file: concourse-tasks/tasks/add-build-comment.yml
+    params:
+      text: "This is another comment"
   - do:
     - put: develop-pull-requests
       params:
         path: code-base
         context: build
+        comment: build_meta/comment.md
         status: pending
   - task: build-linux
     file: concourse-tasks/tasks/build.yml
