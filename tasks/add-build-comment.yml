@@ -8,6 +8,9 @@ image_resource:
     repository: neutrinog/node-docker
     tag: "8.10"
 
+inputs:
+- name: concourse-tasks
+
 outputs:
 - name: build_meta
 
