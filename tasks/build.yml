@@ -5,7 +5,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: neutrinog/concourse-tasks
+    repository: https://github.com/neutrinog/concourse-tasks
     # tag: "8.10"
 
 inputs:
