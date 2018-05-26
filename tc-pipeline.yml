@@ -148,7 +148,6 @@ jobs:
       params:
         path: code-base
         context: build
-        comment: build_meta/comment.md
         status: pending
   - task: build-linux
     file: concourse-tasks/tasks/build.yml
