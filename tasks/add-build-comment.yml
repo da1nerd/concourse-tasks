@@ -11,11 +11,12 @@ image_resource:
 inputs:
 - name: concourse-tasks
 - name: build_meta
-  path: meta
+  path: input_meta
   optional: true
 
 outputs:
 - name: build_meta
+  path: output_meta
 
 params:
   text:

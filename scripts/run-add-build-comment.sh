@@ -3,17 +3,10 @@
 set -xe
 
 # copy input to output
-if [ -d meta ]; then
-  cp -a meta/* build_meta/
-fi
-
-# see input
-if [ -f build_meta/notification.txt ]; then
-  cat build_meta/notification.txt
+if [ -d input_meta ]; then
+  cp -a input_meta/* output_meta/
 fi
 
 # append new values
-echo $text >> build_meta/comment.md
-echo $text >> build_meta/notification.txt
-
-cat build_meta/notification.txt
+echo $text >> output_meta/comment.md
+echo $text >> output_meta/notification.txt
