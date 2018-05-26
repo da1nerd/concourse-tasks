@@ -1,7 +1,7 @@
 FROM node:8.11.2
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 
-# Set the locale
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales zip unzip genisoimage
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get upgrade -yq && apt-get install -yq locales zip unzip genisoimage nodejs
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     dpkg-reconfigure --frontend=noninteractive locales && \
