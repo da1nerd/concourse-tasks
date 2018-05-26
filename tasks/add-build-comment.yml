@@ -15,7 +15,7 @@ outputs:
 - name: build_meta
 
 params:
-  COMMENT:
+  text:
 
 run:
   path: concourse-tasks/scripts/run-add-build-comment.sh
