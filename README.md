@@ -69,3 +69,13 @@ To execute a single job without running the entire pipeline
 ```
 fly -t ci.door43 execute --config tasks/unit-tests.yml
 ```
+
+## Docker Image
+
+This repo contains the Docker image used in jobs.
+If you update the image you can deploy it again with the following commands:
+
+```bash
+docker build -t neutrinog/concourse-tasks .
+docker push neutrinog/concourse-tasks:latest
+```

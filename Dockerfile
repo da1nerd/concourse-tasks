@@ -1,7 +1,7 @@
 FROM node:8.10
 
 # Set the locale
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales zip unzip
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales zip unzip genisoimage
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     dpkg-reconfigure --frontend=noninteractive locales && \
