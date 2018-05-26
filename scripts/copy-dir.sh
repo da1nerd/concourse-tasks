@@ -10,5 +10,5 @@ if [ "$#" -ne 2 ]; then
 fi
 
 if [ -d "$1" ]; then
-  cp -a $1/* $2/
+  cp -aT $1/. $2/
 fi
