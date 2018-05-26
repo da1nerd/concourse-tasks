@@ -12,3 +12,4 @@ npm --version
 
 npm ci
 npm run load-apps
+npm install -g gulp@4.0.0

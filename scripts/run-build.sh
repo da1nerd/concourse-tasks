@@ -9,6 +9,5 @@ cd code-base/
 
 HASH=$(git rev-parse HEAD | cut -c1-7)
 VERSION=$(node -p -e "require('./package.json').version")
-# npm install -g gulp@4.0.0
 
 HASH=$HASH VERSION=$VERSION ../concourse-tasks/scripts/run-build-$PLATFORM.sh
