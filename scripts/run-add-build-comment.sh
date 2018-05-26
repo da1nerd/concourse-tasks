@@ -4,7 +4,7 @@ set -xe
 
 # copy input to output
 if [ -d meta ]; then
-  cp -a meta/ build_meta/
+  cp -a meta/* build_meta/
 fi
 
 # see input
