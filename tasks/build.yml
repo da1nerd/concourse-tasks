@@ -11,6 +11,9 @@ image_resource:
 inputs:
 - name: concourse-tasks
 - name: code-base
+- name: build_meta
+  path: input_meta
+  optional: true
 
 outputs:
 - name: build

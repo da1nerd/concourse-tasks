@@ -2,6 +2,9 @@
 
 set -xe
 
+# copy input to output
+./concourse-tasks/scripts/copy-dir.sh input_meta build_meta
+
 cd code-base/
 
 node --version

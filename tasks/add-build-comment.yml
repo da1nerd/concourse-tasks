@@ -16,7 +16,6 @@ inputs:
 
 outputs:
 - name: build_meta
-  path: output_meta
 
 params:
   text:

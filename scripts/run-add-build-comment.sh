@@ -3,10 +3,8 @@
 set -xe
 
 # copy input to output
-if [ -d input_meta ]; then
-  cp -a input_meta/* output_meta/
-fi
+./concourse-tasks/scripts/copy-dir.sh input_meta build_meta
 
 # append new values
-echo $text >> output_meta/comment.md
-echo $text >> output_meta/notification.txt
+echo $text >> build_meta/comment.md
+echo $text >> build_meta/notification.txt

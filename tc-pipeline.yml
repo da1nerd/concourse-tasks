@@ -143,14 +143,6 @@ jobs:
     passed:
       - Test PR
   - get: concourse-tasks
-  - task: comment
-    file: concourse-tasks/tasks/add-build-comment.yml
-    params:
-      text: "Testing PR comments"
-  - task: comment
-    file: concourse-tasks/tasks/add-build-comment.yml
-    params:
-      text: "This is another comment"
   - do:
     - put: develop-pull-requests
       params:
@@ -168,30 +160,30 @@ jobs:
         params:
           file: build/linux/*
           acl: public-read
-  # - task: build-windows
-  #   file: concourse-tasks/tasks/build.yml
-  #   params:
-  #     PLATFORM: windows
-  #   on_success:
-  #     do:
-  #     - put: builds
-  #       params:
-  #         file: build/windows/64/*
-  #         acl: public-read
-  #     - put: builds
-  #       params:
-  #         file: build/windows/32/*
-  #         acl: public-read
-  # - task: build-macos
-  #   file: concourse-tasks/tasks/build.yml
-  #   params:
-  #     PLATFORM: macos
-  #   on_success:
-  #     do:
-  #     - put: builds
-  #       params:
-  #         file: build/macos/*
-  #         acl: public-read
+  - task: build-windows
+    file: concourse-tasks/tasks/build.yml
+    params:
+      PLATFORM: windows
+    on_success:
+      do:
+      - put: builds
+        params:
+          file: build/windows/64/*
+          acl: public-read
+      - put: builds
+        params:
+          file: build/windows/32/*
+          acl: public-read
+  - task: build-macos
+    file: concourse-tasks/tasks/build.yml
+    params:
+      PLATFORM: macos
+    on_success:
+      do:
+      - put: builds
+        params:
+          file: build/macos/*
+          acl: public-read
   - on_failure:
     put: develop-pull-requests
     params:
