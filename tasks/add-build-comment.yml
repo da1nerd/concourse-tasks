@@ -12,6 +12,7 @@ inputs:
 - name: concourse-tasks
 - name: build_meta
   path: meta
+  optional: true
 
 outputs:
 - name: build_meta
