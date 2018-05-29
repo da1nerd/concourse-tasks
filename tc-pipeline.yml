@@ -186,11 +186,11 @@ jobs:
         do:
         - put: upload
           params:
-            file: build/windows/64/*
+            file: build/windows/x64/*
             acl: public-read
         - put: upload
           params:
-            file: build/windows/32/*
+            file: build/windows/x32/*
             acl: public-read
     on_failure:
       do:
