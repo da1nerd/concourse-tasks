@@ -89,6 +89,7 @@ jobs:
       input_mapping:
         code-base: code-with-dependencies
       params:
+        TC_HELP_DESK_TOKEN: ((help-desk-token))
         PLATFORM: linux
       on_success:
         do:
@@ -101,6 +102,7 @@ jobs:
       input_mapping:
         code-base: code-with-dependencies
       params:
+        TC_HELP_DESK_TOKEN: ((help-desk-token))
         PLATFORM: macos
       on_success:
         do:
@@ -113,6 +115,7 @@ jobs:
       input_mapping:
         code-base: code-with-dependencies
       params:
+        TC_HELP_DESK_TOKEN: ((help-desk-token))
         PLATFORM: windows
       on_success:
         do:
@@ -197,6 +200,7 @@ jobs:
       input_mapping:
         code-base: code-with-dependencies
       params:
+        TC_HELP_DESK_TOKEN: ((help-desk-token))
         PLATFORM: linux
       on_success:
         do:
@@ -209,6 +213,7 @@ jobs:
       input_mapping:
         code-base: code-with-dependencies
       params:
+        TC_HELP_DESK_TOKEN: ((help-desk-token))
         PLATFORM: macos
       on_success:
         do:
@@ -221,6 +226,7 @@ jobs:
       input_mapping:
         code-base: code-with-dependencies
       params:
+        TC_HELP_DESK_TOKEN: ((help-desk-token))
         PLATFORM: windows
       on_success:
         do:

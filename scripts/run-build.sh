@@ -10,8 +10,8 @@ cd code-base/
 HASH=$(git rev-parse HEAD | cut -c1-7)
 VERSION=$(node -p -e "require('./package.json').version")
 
-# TODO: decrypt .env
-
+# TODO: it would be nicer to decrypt .env.enc instead
+echo "TC_HELP_DESK_TOKEN=$TC_HELP_DESK_TOKEN" >> .env
 echo "BUILD=$HASH" >> .env
 
 # execute the appropriate platform builder
