@@ -56,12 +56,12 @@ jobs:
   public: true
   plan:
   - get: concourse-tasks
-  - get: develop-branch
+  - get: code-base
+    resource: develop-branch
     trigger: true
+    version: latest
   - task: install-dependencies
     file: concourse-tasks/tasks/install-deps.yml
-    input_mapping:
-      code-base: develop-branch
   - task: run-unit-tests
     input_mapping:
       code-base: code-with-dependencies
@@ -240,14 +240,14 @@ jobs:
           text: "Some builds failed"
       - put: prs-to-develop
         params:
-          path: prs-to-develop
+          path: code-base
           context: build
           comment: build_meta/comment.md
           status: failure
     on_success:
       put: prs-to-develop
       params:
-        path: prs-to-develop
+        path: code-base
         context: build
         comment: build_meta/comment.md
         status: success
