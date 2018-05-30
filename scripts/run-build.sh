@@ -12,7 +12,7 @@ VERSION=$(node -p -e "require('./package.json').version")
 
 # TODO: decrypt .env
 
-echo "BULID=$HASH" >> .env
+echo "BUILD=$HASH" >> .env
 
 # execute the appropriate platform builder
 HASH=$HASH VERSION=$VERSION ../concourse-tasks/scripts/run-build-$PLATFORM.sh
