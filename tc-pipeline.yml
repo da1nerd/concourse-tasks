@@ -58,9 +58,13 @@ jobs:
   - get: concourse-tasks
   - get: develop-branch
     trigger: true
-  - task: run-unit-tests
+  - task: install-dependencies
+    file: concourse-tasks/tasks/install-deps.yml
     input_mapping:
       code-base: develop-branch
+  - task: run-unit-tests
+    input_mapping:
+      code-base: code-with-dependencies
     file: concourse-tasks/tasks/unit-tests.yml
 
 # build develop branch
@@ -138,40 +142,33 @@ jobs:
 - name: Test PR
   public: true
   plan:
-  - get: prs-to-develop
+  - get: code-base
+    resource: prs-to-develop
     trigger: true
     version: every
   - get: concourse-tasks
-  - task: show-pending
-    config:
-      platform: linux
-      image_resource:
-        type: docker-image
-        source:
-          repository: busybox
-      run:
-        path: echo
-        args: [setting pending status]
-    on_success:
-      put: prs-to-develop
+  - do:
+    - put: prs-to-develop
       params:
-        path: prs-to-develop
+        path: code-base
         context: unit-tests
         status: pending
+  - task: install-dependencies
+    file: concourse-tasks/tasks/install-deps.yml
   - task: test-pull-request
     input_mapping:
-      code-base: prs-to-develop
+      code-base: code-with-dependencies
     file: concourse-tasks/tasks/unit-tests.yml
     on_success:
       put: prs-to-develop
       params:
-        path: prs-to-develop
+        path: code-base
         context: unit-tests
         status: success
     on_failure:
       put: prs-to-develop
       params:
-        path: prs-to-develop
+        path: code-base
         context: unit-tests
         status: failure
 
