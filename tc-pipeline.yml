@@ -1,3 +1,51 @@
+task_templates:
+- &build-linux
+  task: build-linux
+  file: concourse-tasks/tasks/build.yml
+  input_mapping:
+    code-base: code-with-dependencies
+  params:
+    TC_HELP_DESK_TOKEN: ((help-desk-token))
+    PLATFORM: linux
+  on_success:
+    do:
+    - put: upload
+      params:
+        file: build/linux/*
+        acl: public-read
+- &build-macos
+  task: build-macos
+  file: concourse-tasks/tasks/build.yml
+  input_mapping:
+    code-base: code-with-dependencies
+  params:
+    TC_HELP_DESK_TOKEN: ((help-desk-token))
+    PLATFORM: macos
+  on_success:
+    do:
+    - put: upload
+      params:
+        file: build/macos/*
+        acl: public-read
+- &build-windows
+  task: build-windows
+  file: concourse-tasks/tasks/build.yml
+  input_mapping:
+    code-base: code-with-dependencies
+  params:
+    TC_HELP_DESK_TOKEN: ((help-desk-token))
+    PLATFORM: windows
+  on_success:
+    do:
+    - put: upload
+      params:
+        file: build/windows/x64/*
+        acl: public-read
+    - put: upload
+      params:
+        file: build/windows/x32/*
+        acl: public-read
+
 groups:
 - name: develop
   jobs:
@@ -84,49 +132,9 @@ jobs:
   - do:
     - task: install-dependencies
       file: concourse-tasks/tasks/install-deps.yml
-    - task: build-linux
-      file: concourse-tasks/tasks/build.yml
-      input_mapping:
-        code-base: code-with-dependencies
-      params:
-        TC_HELP_DESK_TOKEN: ((help-desk-token))
-        PLATFORM: linux
-      on_success:
-        do:
-        - put: upload
-          params:
-            file: build/linux/*
-            acl: public-read
-    - task: build-macos
-      file: concourse-tasks/tasks/build.yml
-      input_mapping:
-        code-base: code-with-dependencies
-      params:
-        TC_HELP_DESK_TOKEN: ((help-desk-token))
-        PLATFORM: macos
-      on_success:
-        do:
-        - put: upload
-          params:
-            file: build/macos/*
-            acl: public-read
-    - task: build-windows
-      file: concourse-tasks/tasks/build.yml
-      input_mapping:
-        code-base: code-with-dependencies
-      params:
-        TC_HELP_DESK_TOKEN: ((help-desk-token))
-        PLATFORM: windows
-      on_success:
-        do:
-        - put: upload
-          params:
-            file: build/windows/x64/*
-            acl: public-read
-        - put: upload
-          params:
-            file: build/windows/x32/*
-            acl: public-read
+    - *build-linux
+    - *build-macos
+    - *build-windows
     on_failure:
       do:
       - task: record failure
@@ -195,49 +203,9 @@ jobs:
   - do:
     - task: install-dependencies
       file: concourse-tasks/tasks/install-deps.yml
-    - task: build-linux
-      file: concourse-tasks/tasks/build.yml
-      input_mapping:
-        code-base: code-with-dependencies
-      params:
-        TC_HELP_DESK_TOKEN: ((help-desk-token))
-        PLATFORM: linux
-      on_success:
-        do:
-        - put: upload
-          params:
-            file: build/linux/*
-            acl: public-read
-    - task: build-macos
-      file: concourse-tasks/tasks/build.yml
-      input_mapping:
-        code-base: code-with-dependencies
-      params:
-        TC_HELP_DESK_TOKEN: ((help-desk-token))
-        PLATFORM: macos
-      on_success:
-        do:
-        - put: upload
-          params:
-            file: build/macos/*
-            acl: public-read
-    - task: build-windows
-      file: concourse-tasks/tasks/build.yml
-      input_mapping:
-        code-base: code-with-dependencies
-      params:
-        TC_HELP_DESK_TOKEN: ((help-desk-token))
-        PLATFORM: windows
-      on_success:
-        do:
-        - put: upload
-          params:
-            file: build/windows/x64/*
-            acl: public-read
-        - put: upload
-          params:
-            file: build/windows/x32/*
-            acl: public-read
+    - *build-linux
+    - *build-macos
+    - *build-windows
     on_failure:
       do:
       - task: record failure
