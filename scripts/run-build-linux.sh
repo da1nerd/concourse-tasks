@@ -4,6 +4,9 @@ set -xe
 
 FILE=translationCore-linux-x64-$VERSION-$HASH.zip
 
+ls -la .
+cat .env
+
 ./node_modules/.bin/gulp build --linux || exit 1;
 ./node_modules/.bin/gulp release-linux --out=../build/linux/$FILE || exit 1;
 
