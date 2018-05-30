@@ -77,19 +77,62 @@ jobs:
     file: concourse-tasks/tasks/add-build-comment.yml
     params:
       text: "From the `develop` branch:"
-  - task: build-linux
-    file: concourse-tasks/tasks/build.yml
-    params:
-      PLATFORM: linux
-    on_success:
+  - do:
+    - task: install-dependencies
+      file: concourse-tasks/tasks/install-deps.yml
+    - task: build-linux
+      file: concourse-tasks/tasks/build.yml
+      input_mapping:
+        code-base: code-with-dependencies
+      params:
+        PLATFORM: linux
+      on_success:
+        do:
+        - put: upload
+          params:
+            file: build/linux/*
+            acl: public-read
+    - task: build-macos
+      file: concourse-tasks/tasks/build.yml
+      input_mapping:
+        code-base: code-with-dependencies
+      params:
+        PLATFORM: macos
+      on_success:
+        do:
+        - put: upload
+          params:
+            file: build/macos/*
+            acl: public-read
+    - task: build-windows
+      file: concourse-tasks/tasks/build.yml
+      input_mapping:
+        code-base: code-with-dependencies
+      params:
+        PLATFORM: windows
+      on_success:
+        do:
+        - put: upload
+          params:
+            file: build/windows/x64/*
+            acl: public-read
+        - put: upload
+          params:
+            file: build/windows/x32/*
+            acl: public-read
+    on_failure:
       do:
-      - put: upload
+      - task: record failure
+        file: concourse-tasks/tasks/add-build-comment.yml
         params:
-          file: build/linux/*
-          acl: public-read
+          text: "Some builds failed"
       - put: notify
         params:
           text_file: build_meta/notification.txt
+    on_success:
+      put: notify
+      params:
+        text_file: build_meta/notification.txt
 
 # test pull requests
 - name: Test PR
