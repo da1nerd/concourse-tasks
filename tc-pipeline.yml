@@ -34,7 +34,7 @@ resources:
   source:
     uri: https://github.com/neutrinog/concourse-tasks
     branch: master
-- name: develop-pull-requests
+- name: prs-to-develop
   type: pull-request
   source:
     access_token: ((github-token))
@@ -138,7 +138,7 @@ jobs:
 - name: Test PR
   public: true
   plan:
-  - get: develop-pull-requests
+  - get: prs-to-develop
     trigger: true
     version: every
   - get: concourse-tasks
@@ -153,25 +153,25 @@ jobs:
         path: echo
         args: [setting pending status]
     on_success:
-      put: develop-pull-requests
+      put: prs-to-develop
       params:
-        path: develop-pull-requests
+        path: prs-to-develop
         context: unit-tests
         status: pending
   - task: test-pull-request
     input_mapping:
-      code-base: develop-pull-requests
+      code-base: prs-to-develop
     file: concourse-tasks/tasks/unit-tests.yml
     on_success:
-      put: develop-pull-requests
+      put: prs-to-develop
       params:
-        path: develop-pull-requests
+        path: prs-to-develop
         context: unit-tests
         status: success
     on_failure:
-      put: develop-pull-requests
+      put: prs-to-develop
       params:
-        path: develop-pull-requests
+        path: prs-to-develop
         context: unit-tests
         status: failure
 
@@ -180,14 +180,14 @@ jobs:
   public: true
   plan:
   - get: code-base
-    resource: develop-pull-requests
+    resource: prs-to-develop
     trigger: true
     version: every
     passed:
       - Test PR
   - get: concourse-tasks
   - do:
-    - put: develop-pull-requests
+    - put: prs-to-develop
       params:
         path: code-base
         context: build
@@ -241,16 +241,16 @@ jobs:
         file: concourse-tasks/tasks/add-build-comment.yml
         params:
           text: "Some builds failed"
-      - put: develop-pull-requests
+      - put: prs-to-develop
         params:
-          path: develop-pull-requests
+          path: prs-to-develop
           context: build
           comment: build_meta/comment.md
           status: failure
     on_success:
-      put: develop-pull-requests
+      put: prs-to-develop
       params:
-        path: develop-pull-requests
+        path: prs-to-develop
         context: build
         comment: build_meta/comment.md
         status: success
