@@ -1,4 +1,12 @@
 task_templates:
+- &install-deps
+  task: install-dependencies
+  file: concourse-tasks/tasks/install-deps.yml
+- &test-code
+  task: run-unit-tests
+  input_mapping:
+    code-base: code-with-dependencies
+  file: concourse-tasks/tasks/unit-tests.yml
 - &build-linux
   task: build-linux
   file: concourse-tasks/tasks/build.yml
@@ -108,12 +116,8 @@ jobs:
     resource: develop-branch
     trigger: true
     version: latest
-  - task: install-dependencies
-    file: concourse-tasks/tasks/install-deps.yml
-  - task: run-unit-tests
-    input_mapping:
-      code-base: code-with-dependencies
-    file: concourse-tasks/tasks/unit-tests.yml
+  - *install-deps
+  - *test-code
 
 # build develop branch
 - name: Build Develop
@@ -130,8 +134,7 @@ jobs:
     params:
       text: "From the `develop` branch:"
   - do:
-    - task: install-dependencies
-      file: concourse-tasks/tasks/install-deps.yml
+    - *install-deps
     - *build-linux
     - *build-macos
     - *build-windows
@@ -164,12 +167,8 @@ jobs:
         path: code-base
         context: unit-tests
         status: pending
-  - task: install-dependencies
-    file: concourse-tasks/tasks/install-deps.yml
-  - task: test-pull-request
-    input_mapping:
-      code-base: code-with-dependencies
-    file: concourse-tasks/tasks/unit-tests.yml
+    - *install-deps
+    - *test-code
     on_success:
       put: prs-to-develop
       params:
@@ -201,8 +200,7 @@ jobs:
         context: build
         status: pending
   - do:
-    - task: install-dependencies
-      file: concourse-tasks/tasks/install-deps.yml
+    - *install-deps
     - *build-linux
     - *build-macos
     - *build-windows
