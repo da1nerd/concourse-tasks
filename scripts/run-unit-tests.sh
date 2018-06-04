@@ -4,5 +4,11 @@ set -xe
 
 cd code-base/
 
-npm test
-codecov 
+TEST_SCRIPT=./.concourse/test.sh
+
+if [ -f $TEST_SCRIPT ]; then
+  $TEST_SCRIPT
+else
+  npm test
+  codecov
+fi
