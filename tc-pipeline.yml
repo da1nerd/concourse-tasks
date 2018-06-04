@@ -59,12 +59,12 @@ task_templates:
 groups:
 - name: develop
   jobs:
-  - Test Develop
-  - Build Develop
+  - test-develop
+  - build-develop
 - name: pull requests
   jobs:
-  - Test PR
-  - Build PR
+  - test-pr
+  - build-pr
 
 resource_types:
 - name: pull-request
@@ -112,7 +112,7 @@ resources:
 
 jobs:
 # test develop branch
-- name: Test Develop
+- name: test-develop
   public: true
   plan:
   - get: concourse-tasks
@@ -124,14 +124,14 @@ jobs:
   - *test-code
 
 # build develop branch
-- name: Build Develop
+- name: build-develop
   public: true
   plan:
   - get: code-base
     resource: develop-branch
     trigger: true
     passed:
-      - Test Develop
+      - test-develop
   - get: concourse-tasks
   - task: record source branch
     file: concourse-tasks/tasks/add-build-comment.yml
@@ -157,7 +157,7 @@ jobs:
         text_file: build_meta/notification.txt
 
 # test pull requests
-- name: Test PR
+- name: test-pr
   public: true
   plan:
   - get: code-base
@@ -187,7 +187,7 @@ jobs:
         status: failure
 
 # build pull request
-- name: Build PR
+- name: build-pr
   public: true
   plan:
   - get: code-base
@@ -195,7 +195,7 @@ jobs:
     trigger: true
     version: every
     passed:
-      - Test PR
+      - test-pr
   - get: concourse-tasks
   - do:
     - put: prs-to-develop
