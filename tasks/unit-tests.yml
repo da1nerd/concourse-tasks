@@ -14,5 +14,8 @@ inputs:
 outputs:
 - name: test-log
 
+params:
+- CODECOV_TOKEN:
+
 run:
   path: concourse-tasks/scripts/run-unit-tests.sh

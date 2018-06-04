@@ -6,6 +6,8 @@ task_templates:
   task: run-unit-tests
   input_mapping:
     code-base: code-with-dependencies
+  params:
+    CODECOV_TOKEN: ((codecov-token))
   file: concourse-tasks/tasks/unit-tests.yml
 - &build-linux
   task: build-linux

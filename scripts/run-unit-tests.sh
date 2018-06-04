@@ -5,3 +5,4 @@ set -xe
 cd code-base/
 
 npm test
+codecov 
