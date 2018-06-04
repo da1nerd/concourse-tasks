@@ -99,6 +99,8 @@ resources:
     private_key: ((github-private-key))
     repo: unfoldingWord-dev/translationCore
     base: develop
+    ci_skip: true
+    authorship_restriction: true
 - name: upload
   type: s3
   source:
