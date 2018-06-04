@@ -55,7 +55,7 @@ fly -t ci.door43 login -n tc -c https://ci.door43.org
 
 Then deploy the pipeline
 ```
-fly -t ci.door43 set-pipeline -p translationCore -c tc-pipeline.yml -l credentials.yml
+fly -t ci.door43 set-pipeline -p translation-core -c tc-pipeline.yml -l credentials.yml
 ```
 
 > NOTE: you'll need to provide the correct credentials inside `credentials.yml` see [Parameters](https://concoursetutorial.com/basics/parameters/) for details.
