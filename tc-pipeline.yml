@@ -199,7 +199,6 @@ jobs:
         path: code-base
         context: build
         status: pending
-  - do:
     - *install-deps
     - *build-linux
     - *build-macos
