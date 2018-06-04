@@ -10,5 +10,4 @@ if [ -f $TEST_SCRIPT ]; then
   $TEST_SCRIPT
 else
   npm test
-  codecov
 fi
