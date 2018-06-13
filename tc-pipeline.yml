@@ -113,6 +113,7 @@ resources:
 jobs:
 # test develop branch
 - name: test-develop
+  serial: true
   public: false
   plan:
   - get: concourse-tasks
@@ -125,6 +126,7 @@ jobs:
 
 # build develop branch
 - name: build-develop
+  serial: true
   public: false
   plan:
   - get: code-base
@@ -159,6 +161,7 @@ jobs:
 # test pull requests
 - name: test-pr
   public: false
+  serial: true
   plan:
   - get: code-base
     resource: prs-to-develop
@@ -189,6 +192,7 @@ jobs:
 # build pull request
 - name: build-pr
   public: false
+  serial: true
   plan:
   - get: code-base
     resource: prs-to-develop
