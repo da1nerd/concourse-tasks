@@ -19,10 +19,10 @@ task_templates:
     PLATFORM: linux
   on_success:
     do:
-    - put: upload
-      params:
-        file: build/linux/*
-        acl: public-read
+    - put: upload-develop
+      # params:
+      #   file: build/linux/*
+      #   acl: public-read
 - &build-macos
   task: build-macos
   file: concourse-tasks/tasks/build.yml
@@ -76,6 +76,10 @@ resource_types:
   source:
     repository: cfcommunity/slack-notification-resource
     tag: latest
+- name: s3-folder
+  type: docker-image
+  source:
+    repository: 18fgsa/s3-resource-simple
 
 resources:
 - name: notify
@@ -101,6 +105,17 @@ resources:
     base: develop
     ci_skip: true
     authorship_restriction: true
+- name: upload-develop
+  type: s3-folder
+  source:
+    bucket: tc-builds.door43.org
+    path: develop
+    access_key_id: ((aws-access-id))
+    secret_access_key: ((aws-secret-key))
+    region: us-west-2
+    options:
+      - "--exclude '*'"
+      - "--include 'build/*'"
 - name: upload
   type: s3
   source:
