@@ -19,10 +19,10 @@ task_templates:
     PLATFORM: linux
   on_success:
     do:
-    - put: upload-develop
-      # params:
-      #   file: build/linux/*
-      #   acl: public-read
+    - put: upload
+      params:
+        file: build/linux/*
+        acl: public-read
 - &build-macos
   task: build-macos
   file: concourse-tasks/tasks/build.yml
