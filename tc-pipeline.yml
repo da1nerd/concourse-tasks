@@ -105,17 +105,17 @@ resources:
     base: develop
     ci_skip: true
     authorship_restriction: true
-- name: upload-develop
-  type: s3-folder
-  source:
-    bucket: tc-builds.door43.org
-    path: develop
-    access_key_id: ((aws-access-id))
-    secret_access_key: ((aws-secret-key))
-    region: us-west-2
-    options:
-      - "--exclude '*'"
-      - "--include 'build/*'"
+# - name: upload-develop
+#   type: s3-folder
+#   source:
+#     bucket: tc-builds.door43.org
+#     path: develop
+#     access_key_id: ((aws-access-id))
+#     secret_access_key: ((aws-secret-key))
+#     region: us-west-2
+#     options:
+#       - "--exclude '*'"
+#       - "--include 'build/*'"
 - name: upload
   type: s3
   source:
