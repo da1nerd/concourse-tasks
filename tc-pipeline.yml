@@ -16,6 +16,7 @@ task_templates:
     code-base: code-with-dependencies
   params:
     TC_HELP_DESK_TOKEN: ((help-desk-token))
+    TC_HELP_DESK_EMAIL: ((help-desk-email))
     PLATFORM: linux
   on_success:
     do:
@@ -30,6 +31,7 @@ task_templates:
     code-base: code-with-dependencies
   params:
     TC_HELP_DESK_TOKEN: ((help-desk-token))
+    TC_HELP_DESK_EMAIL: ((help-desk-email))
     PLATFORM: macos
   on_success:
     do:
@@ -44,6 +46,7 @@ task_templates:
     code-base: code-with-dependencies
   params:
     TC_HELP_DESK_TOKEN: ((help-desk-token))
+    TC_HELP_DESK_EMAIL: ((help-desk-email))
     PLATFORM: windows
   on_success:
     do:

@@ -22,6 +22,7 @@ outputs:
 params:
   PLATFORM: linux # default value
   TC_HELP_DESK_TOKEN:
+  TC_HELP_DESK_EMAIL:
 
 run:
   path: concourse-tasks/scripts/run-build.sh
