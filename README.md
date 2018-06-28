@@ -79,3 +79,14 @@ If you update the image you can deploy it again with the following commands:
 docker build -t neutrinog/concourse-tasks .
 docker push neutrinog/concourse-tasks:latest
 ```
+
+## Server Maintenance
+
+You may need to clean up old docker images from time to time (like after rebooting, or hard restarting concourse).
+See [this gist](https://gist.github.com/bastman/5b57ddb3c11942094f8d0a97d461b430) for details.
+
+Concourse can be stopped/started by running
+```
+docker-compose stop
+docker-compose start
+```
