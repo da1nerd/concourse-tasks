@@ -2,6 +2,7 @@ task_templates:
 - &install-deps
   task: install-dependencies
   file: concourse-tasks/tasks/install-deps.yml
+  timeout: 30m
 - &test-code
   task: run-unit-tests
   input_mapping:
@@ -9,9 +10,11 @@ task_templates:
   params:
     CODECOV_TOKEN: ((codecov-token))
   file: concourse-tasks/tasks/unit-tests.yml
+  timeout: 1h
 - &build-linux
   task: build-linux
   file: concourse-tasks/tasks/build.yml
+  timeout: 1h
   input_mapping:
     code-base: code-with-dependencies
   params:
@@ -27,6 +30,7 @@ task_templates:
 - &build-macos
   task: build-macos
   file: concourse-tasks/tasks/build.yml
+  timeout: 1h
   input_mapping:
     code-base: code-with-dependencies
   params:
@@ -42,6 +46,7 @@ task_templates:
 - &build-windows
   task: build-windows
   file: concourse-tasks/tasks/build.yml
+  timeout: 1h
   input_mapping:
     code-base: code-with-dependencies
   params:
